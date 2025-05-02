@@ -7,13 +7,16 @@
         <link rel="icon" type="image/x-icon" href="/logo.png">
         <link rel="stylesheet" href="/style.css">
         <script src="/navbar.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore-compat.js"></script>
+        <script src="/submitwork.js"></script>
     </head>
     <body>
         <div class="mainbody" id="top">
             <h1>Extra Work Submittions</h1>
             <p>Submit all your extra work here.</p>
             <br>
-            <select name="type" id="type">
+            <select name="type" id="type" onchange="change()">
                 <option value="erg">Erg</option>
                 <option value="berg">Berg</option>
                 <option value="run">Run</option>
@@ -21,10 +24,24 @@
                 <option value="core">Core</option>
             </select>
             <br>
-            <input type="text" id="mins" placeholder="Enter the number of minutes">
+            <h5>Date:</h5>
+            <input type="datetime-local" name="date" id="date" placeholder="Enter the date">
+            <br>
+            <h5>Number of Minutes:</h5>
+            <input type="text" id="mins" placeholder="Number of minutes">
+            <br>
+            <div id="splits" style="display: inline-block;">
+                <h5>Split:</h5>
+                <input type="text" id="split" placeholder="e.g. 54.2">
+                <br>
+            </div>
+            <div id="distan" style="display: none;">
+                <h5>Distance:</h5>
+                <input type="text" id="dista" placeholder="Enter the distance">
+                <br>
+            </div>
             <br>
             <button id="submit" onclick="submitWork()">Submit</button>
-            <br>
         </div>
     </body>
 </html>

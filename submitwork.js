@@ -10,6 +10,9 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
+let split = true;
+let distance = false;
+
 function checkSignIn() {
     const cookies = document.cookie.split(';');
     let done = false;
@@ -28,13 +31,65 @@ function checkSignIn() {
     }
 }
 
-async function submitRequest() {
-    let date = new Date();
-    const requestData = {
+function change() {
+    const type = document.getElementById('type').value;
+    if (type === "bike" || type === "run") {
+        document.getElementById('distan').style.display = "inline-block";
+        document.getElementById('splits').style.display = "none";
+        split = false;
+        distance = true;
+    } else if (type === "erg" || type === "berg") {
+        document.getElementById('distan').style.display = "none";
+        document.getElementById('splits').style.display = "inline-block";
+        split = true;
+        distance = false;
+    } else if (type === "core") {
+        document.getElementById('distan').style.display = "none";
+        document.getElementById('splits').style.display = "none";
+        split = false;
+        distance = false;
+    }
+}
 
-        type: document.getElementById('type').value,
-        mins: document.getElementById('mins').value
-    };
+async function submitWork() {
+    let date = document.getElementById('date').value;
+    console.log(split);
+    console.log(distance);
+    console.log(date);
+    let requestData;
+    if (split) {
+        console.log("Split");
+        requestData = {
+            [date]: {
+                hasSplit: split,
+                hasDistance: distance,
+                split: document.getElementById('split').value,
+                type: document.getElementById('type').value,
+                mins: document.getElementById('mins').value
+            }
+        };
+    } else if (distance) {
+        console.log("Distance");
+        requestData = {
+            [date]: {
+                hasSplit: split,
+                hasDistance: distance,
+                distance: document.getElementById('dista').value,
+                type: document.getElementById('type').value,
+                mins: document.getElementById('mins').value
+            }
+        };
+    } else {
+        console.log("Core");
+        requestData = {
+            [date]: {
+                hasSplit: split,
+                hasDistance: distance,
+                type: document.getElementById('type').value,
+                mins: document.getElementById('mins').value
+            }
+        };
+    }
 
     let username;
     const cookies = document.cookie.split(';');
@@ -45,12 +100,17 @@ async function submitRequest() {
             break;
         }
     }
-    try {
+    // try {
         currdata = await db.collection("work").doc(username).get()
-        requestData.push(currdata.data())
-    } catch (error) {
-        console.log("First data")
-    }
+        let data = currdata.data();
+        data = {
+            ...data,
+            ...requestData
+        }
+        
+    // } catch (error) {
+    //     console.log("First data")
+    // }
     
 
     db.collection("work").doc(username).set(requestData)

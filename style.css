@@ -400,6 +400,14 @@ input[type="password"] {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
+input[type="datetime-local"] {
+  display: inline-block;
+  padding: 10px;
+  margin: 10px 0;
+  text-align: left;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 textarea{
   display: inline-block;
   padding: 10px;

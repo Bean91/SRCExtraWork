@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title id="title">SRC Extra Work | Dashboard</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="/logo.png">
+        <link rel="stylesheet" href="/style.css">
+        <script src="/navbar.js"></script>
+        <script src="/footer.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore-compat.js"></script>
+        <script src="dashboard.js"></script>
+    </head>
+    <body>
+        <div class="mainbody" id="top">
+            <h1>Dashboard</h1>
+            <h3>Welcome, <span id="user"></span></h3>
+            <br>
+            <h4>Update Username (<span id="currentusername"></span>):</h4>
+            <input type="text" name="username" id="username" placeholder="Update username" required>
+            <br>
+            <button onclick="usernameChange()">Update</button>
+            <br>
+            <br>
+            <h4>Update Name (<span id="currentname"></span>):</h4>
+            <input type="text" name="name" id="name" placeholder="Update name" required>
+            <br>
+            <button onclick="nameChange()">Update</button>
+            <br>
+            <br>
+            <h4>Update Email (<span id="currentemail"></span>):</h4>
+            <input type="text" name="email" id="email" placeholder="Update email" required>
+            <br>
+            <button onclick="emailChange()">Update</button>
+            <br>
+            <br>
+            <h4>Update Team (<span id="currentteam"></span>):</h4>
+            <input type="text" name="team" id="team" placeholder="Update team" required>
+            <br>
+            <button onclick="teamChange()">Update</button>
+            <br>
+            <br>
+            <button onclick="signOut()">Sign Out</button>
+            <br>
+            <br>
+            <button onclick="deleteAccount()" style="background-color: red;">Delete Account</button>
+        </div>
+    </body>
+</html>

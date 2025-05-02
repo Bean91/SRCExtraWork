@@ -28,6 +28,46 @@ function checkSignIn() {
     }
 }
 
+async function submitRequest() {
+    let date = new Date();
+    const requestData = {
+
+        type: document.getElementById('type').value,
+        mins: document.getElementById('mins').value
+    };
+
+    let username;
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i].trim();
+        if (cookie.startsWith("username" + '=')) {
+            username = cookie.substring(9);
+            break;
+        }
+    }
+    try {
+        currdata = await db.collection("work").doc(username).get()
+        requestData.push(currdata.data())
+    } catch (error) {
+        console.log("First data")
+    }
+    
+
+    db.collection("work").doc(username).set(requestData)
+        .then(() => {
+            console.log("Work submitted successfully");
+            alert("Work submitted successfully");
+        })
+        .catch((error) => {
+            console.error("Error submitting work: ", error);
+            alert("Error submitting work");
+        });
+    
+    setTimeout(() => {
+        location.reload();
+    }, 1000);
+}
+
 window.onload = function() {
     checkSignIn();
 }

@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     if(cookie.substring(9)) {
                         document.getElementById('signin').style.display = "none";
                         document.getElementById('dashboard').style.display = "inline-block";
+                        document.getElementById('submitwork').style.display = "inline-block";
                     }
                 }
                 if (cookie.startsWith("admin" + '=')) {

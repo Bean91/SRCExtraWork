@@ -9,5 +9,22 @@
         <script src="/navbar.js"></script>
     </head>
     <body>
+        <div class="mainbody" id="top">
+            <h1>Extra Work Submittions</h1>
+            <p>Submit all your extra work here.</p>
+            <br>
+            <select name="type" id="type">
+                <option value="erg">Erg</option>
+                <option value="berg">Berg</option>
+                <option value="run">Run</option>
+                <option value="bike">Bike</option>
+                <option value="core">Core</option>
+            </select>
+            <br>
+            <input type="text" id="mins" placeholder="Enter the number of minutes">
+            <br>
+            <button id="submit" onclick="submitWork()">Submit</button>
+            <br>
+        </div>
     </body>
 </html>

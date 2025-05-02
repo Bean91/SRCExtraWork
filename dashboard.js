@@ -39,7 +39,15 @@ async function fillIn() {
                 await db.collection("accounts").doc(cookie.substring(9)).get().then((data) => {
                     document.getElementById("currentname").innerHTML = data.data().name;
                     document.getElementById("currentemail").innerHTML = data.data().email;
-                    document.getElementById("currentteam").innerHTML = data.data().team;
+                    if(data.data().team === "nb"){
+                        document.getElementById("currentteam").innerHTML = "Novice Boys";
+                    } else if(data.data().team === "ng"){
+                        document.getElementById("currentteam").innerHTML = "Novice Girls";
+                    } else if(data.data().team === "vb"){
+                        document.getElementById("currentteam").innerHTML = "Varsity Boys";
+                    } else if(data.data().team === "vg"){
+                        document.getElementById("currentteam").innerHTML = "Varsity Girls";
+                    }
                 }
                 ).catch((error) => {
                     console.error("Error getting document:", error);
@@ -74,20 +82,22 @@ function signOut() {
 }
 
 async function deleteAccount() {
-    const cookies = document.cookie.split(';');
-    for (let i = 0; i < cookies.length; i++) {
-        let cookie = cookies[i].trim();
-        if (cookie.startsWith("username" + '=')) {
-            if(cookie.substring(9)) {
-                await db.collection("accounts").doc(cookie.substring(9)).delete().then(() => {
-                    alert("Document successfully deleted!");
-                }).catch((error) => {
-                    console.error("Error removing document: ", error);
-                });
+    if(confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i].trim();
+            if (cookie.startsWith("username" + '=')) {
+                if(cookie.substring(9)) {
+                    await db.collection("accounts").doc(cookie.substring(9)).delete().then(() => {
+                        alert("Document successfully deleted!");
+                    }).catch((error) => {
+                        console.error("Error removing document: ", error);
+                    });
+                }
             }
         }
+        signOut();
     }
-    signOut();
 }
 
 async function usernameChange() {
@@ -134,7 +144,7 @@ async function teamChange() {
         if (cookie.startsWith("username" + '=')) {
             if(cookie.substring(9)) {
                 await db.collection("accounts").doc(cookie.substring(9)).update({
-                    email: document.getElementById("team").value
+                    team: document.getElementById("team").value
                 }).then(() => {
                     alert("Team successfully changed!");
                 }).catch((error) => {

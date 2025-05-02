@@ -7,7 +7,50 @@
         <link rel="icon" type="image/x-icon" href="/logo.png">
         <link rel="stylesheet" href="/style.css">
         <script src="/navbar.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore-compat.js"></script>
+        <script src="leaderboard.js"></script>
     </head>
     <body>
+        <div id="top" class="mainbody">
+            <h1>Leaderboard</h1>
+            <h3 id="welcome">Welcome to the Leaderboard</h3>
+            <br>
+            <center>
+                <div id="leaderboard">
+                    <table id="options">
+                        <tr id="optionslist">
+                            <td><h4>Teams</h4></td>
+                            <td><h4>Type of Work</h4></td>
+                            <td><h4>Week (Default: All Time)</h4></td>
+                        </tr>
+                        <tr id="optionsrow">
+                            <td id="teamlist">
+                                <select name="team" id="team">
+                                    <option value="at">All Teams</option>
+                                    <option value="nb">Novice Boys</option>
+                                    <option value="vb">Varsity Boys</option>
+                                    <option value="ng">Novice Girls</option>
+                                    <option value="vg">Varsity Girls</option>
+                                </select>
+                            </td>
+                            <td id="typelist">
+                                <select name="type" id="type">
+                                    <option value="all">All</option>
+                                    <option value="erg">Erg</option>
+                                    <option value="berg">Berg</option>
+                                    <option value="run">Run</option>
+                                    <option value="bike">Bike</option>
+                                    <option value="core">Core</option>
+                                </select>
+                            </td>
+                            <td id="weeklist">
+                                <input type="week" name="week" id="week">
+                            </td>
+                        </tr>
+                    </div>
+                </center>
+            </div>
+        </div>
     </body>
 </html>

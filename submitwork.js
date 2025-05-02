@@ -116,20 +116,15 @@ async function submitWork() {
             break;
         }
     }
-    // try {
-        currdata = await db.collection("work").doc(username).get()
-        let data = currdata.data();
-        console.log(data);
-        data = {
-            ...data,
-            ...requestData
-        }
-        console.log(data);
-        
-    // } catch (error) {
-    //     console.log("First data")
-    // }
-    
+
+    currdata = await db.collection("work").doc(username).get()
+    let data = currdata.data();
+    console.log(data);
+    data = {
+        ...data,
+        ...requestData
+    }
+    console.log(data);
 
     db.collection("work").doc(username).set(data)
         .then(() => {

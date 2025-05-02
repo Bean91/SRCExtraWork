@@ -34,7 +34,12 @@
             <input type="text" name="name" required id="name" placeholder="Enter your name">
             <br>
             <h5>Team:</h5>
-            <input type="text" name="team" required id="team" placeholder="(e.g. Novice Boys)">
+            <select name="team" id="team">
+                <option value="nb">Novice Boys</option>
+                <option value="vb">Varsity Boys</option>
+                <option value="ng">Novice Girls</option>
+                <option value="vg">Varsity Girls</option>
+            </select>
             <br>
             <button id="submit" onclick="submit()">Submit</button>
         </div>

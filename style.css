@@ -408,6 +408,14 @@ input[type="datetime-local"] {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
+input[type="week"] {
+  display: inline-block;
+  padding: 10px;
+  margin: 10px 0;
+  text-align: left;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
 textarea{
   display: inline-block;
   padding: 10px;
@@ -425,4 +433,14 @@ button {
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.toplistleaderboard {
+  display: inline-block;
+  padding: 10px;
+}
+td {
+  padding-left: 10px;
+  padding-right: 10px;
+  text-align: center;
 }

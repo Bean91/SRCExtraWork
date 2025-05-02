@@ -56,6 +56,22 @@ async function submitWork() {
     console.log(split);
     console.log(distance);
     console.log(date);
+    let splitdata = document.getElementById('split').value;
+    let distanceData = document.getElementById('dista').value;
+    let typeData = document.getElementById('type').value;
+    let minsData = document.getElementById('mins').value;
+        if (split) {
+            splitdata = parseFloat(splitdata);
+        } 
+        if (distance) {
+            distanceData = parseFloat(distanceData);
+        }
+        minsData = parseFloat(minsData);
+        console.log(typeof(splitdata), typeof(distanceData), typeof(minsData));
+    if(Number.isNaN(splitdata) || Number.isNaN(distanceData) || Number.isNaN(minsData)) {
+        alert("Please make sure you use only numbers, no letters.");
+        return;
+    }
     let requestData;
     if (split) {
         console.log("Split");
@@ -63,9 +79,9 @@ async function submitWork() {
             [date]: {
                 hasSplit: split,
                 hasDistance: distance,
-                split: document.getElementById('split').value,
-                type: document.getElementById('type').value,
-                mins: document.getElementById('mins').value
+                split: splitdata,
+                type: typeData,
+                mins: minsData
             }
         };
     } else if (distance) {
@@ -74,9 +90,9 @@ async function submitWork() {
             [date]: {
                 hasSplit: split,
                 hasDistance: distance,
-                distance: document.getElementById('dista').value,
-                type: document.getElementById('type').value,
-                mins: document.getElementById('mins').value
+                distance: distanceData,
+                type: typeData,
+                mins: minsData
             }
         };
     } else {
@@ -85,8 +101,8 @@ async function submitWork() {
             [date]: {
                 hasSplit: split,
                 hasDistance: distance,
-                type: document.getElementById('type').value,
-                mins: document.getElementById('mins').value
+                type: typeData,
+                mins: minsData
             }
         };
     }
@@ -103,17 +119,19 @@ async function submitWork() {
     // try {
         currdata = await db.collection("work").doc(username).get()
         let data = currdata.data();
+        console.log(data);
         data = {
             ...data,
             ...requestData
         }
+        console.log(data);
         
     // } catch (error) {
     //     console.log("First data")
     // }
     
 
-    db.collection("work").doc(username).set(requestData)
+    db.collection("work").doc(username).set(data)
         .then(() => {
             console.log("Work submitted successfully");
             alert("Work submitted successfully");

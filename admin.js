@@ -24,11 +24,21 @@ async function fetchUsers() {
     const snapshot = await db.collection("accounts").get();
     snapshot.forEach(doc => {
         const data = doc.data();
-        let li = `<li>${data.name} (${data.email}) in team: ${data.team}.`;
+        let teamname;
+        if(data.team === "nb"){
+            teamname = "Novice Boys";
+        } else if(data.team === "ng"){
+            teamname = "Novice Girls";
+        } else if(data.team === "vb"){
+            teamname = "Varsity Boys";
+        } else if(data.team === "vg"){
+            teamname = "Varsity Girls";
+        }
+        let li = `<li>${data.name} (${data.email}) in team: ${teamname}.`;
         if (data.admin) {
-            li += ` Is an admin.`;
+            li += ` Is a coach/coxswain.`;
         } if(data.mvp) {
-            li += ` Is an MVP.`;
+            li += ` Is a captain.`;
         }
         li += ` <span onclick="removeData('${doc.id}', 'accounts')">Remove?</span></li>`;
         requestList.innerHTML += li;

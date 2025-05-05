@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
                 }
                 if (cookie.startsWith("admin" + '=')) {
-                    if(cookie.substring(6)) {
+                    if(cookie.substring(6) === "true") {
                         document.getElementById('admin').style.display = "inline-block";
                     }
                 }

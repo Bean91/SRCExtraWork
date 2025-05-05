@@ -7,8 +7,11 @@ const firebaseConfig = {
     appId: "1:550424826105:web:8f4e82053bb3b67b1a5228",
     measurementId: "G-NHW04V84MM"
 };
+
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+
+const IMGUR_CLIENT_ID = "5be34558b5d3a89";
 
 let split = true;
 let distance = false;
@@ -33,17 +36,17 @@ function checkSignIn() {
 
 function change() {
     const type = document.getElementById('type').value;
-    if (type === "bike" || type === "run") {
+    if (type === "Bike" || type === "Run") {
         document.getElementById('distan').style.display = "inline-block";
         document.getElementById('splits').style.display = "none";
         split = false;
         distance = true;
-    } else if (type === "erg" || type === "berg") {
+    } else if (type === "Erg" || type === "Berg") {
         document.getElementById('distan').style.display = "none";
         document.getElementById('splits').style.display = "inline-block";
         split = true;
         distance = false;
-    } else if (type === "core") {
+    } else if (type === "Core") {
         document.getElementById('distan').style.display = "none";
         document.getElementById('splits').style.display = "none";
         split = false;
@@ -51,11 +54,31 @@ function change() {
     }
 }
 
+async function uploadToImgur(imageFile) {
+    const formData = new FormData();
+    formData.append("image", imageFile);
+
+    const response = await fetch("https://api.imgur.com/3/image", {
+        method: "POST",
+        headers: {
+            Authorization: "Client-ID " + IMGUR_CLIENT_ID
+        },
+        body: formData
+    });
+
+    const data = await response.json();
+    if (data.success) {
+        return {
+            link: data.data.link,
+            deletehash: data.data.deletehash
+        };
+    } else {
+        throw new Error("Imgur upload failed");
+    }
+}
+
 async function submitWork() {
     let date = document.getElementById('date').value;
-    console.log(split);
-    console.log(distance);
-    console.log(date);
     let splitdata = document.getElementById('split').value;
     let distanceData = document.getElementById('dista').value;
     let typeData = document.getElementById('type').value;
@@ -115,6 +138,24 @@ async function submitWork() {
             username = cookie.substring(9);
             break;
         }
+    }
+
+    const imageFile = document.getElementById("image").files[0];
+    let imageUrl = "";
+    let deleteHash = "";
+    if (imageFile) {
+        try {
+            const imgurData = await uploadToImgur(imageFile);
+            imageUrl = imgurData.link;
+            deleteHash = imgurData.deletehash;
+        } catch (err) {
+            alert("Image upload failed: " + err.message);
+            return;
+        }
+    }
+    if (imageUrl) {
+        requestData[date].image = imageUrl;
+        requestData[date].deletehash = deleteHash;
     }
 
     currdata = await db.collection("work").doc(username).get()

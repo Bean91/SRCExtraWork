@@ -17,11 +17,11 @@
             <p>Submit all your extra work here.</p>
             <br>
             <select name="type" id="type" onchange="change()">
-                <option value="erg">Erg</option>
-                <option value="berg">Berg</option>
-                <option value="run">Run</option>
-                <option value="bike">Bike</option>
-                <option value="core">Core</option>
+                <option value="Erg">Erg</option>
+                <option value="Berg">Berg</option>
+                <option value="Run">Run</option>
+                <option value="Bike">Bike</option>
+                <option value="Core">Core</option>
             </select>
             <br>
             <h5>Date:</h5>
@@ -40,6 +40,9 @@
                 <input type="text" id="dista" placeholder="Enter the distance">
                 <br>
             </div>
+            <br>
+            <h5>Photo of Workout Data:</h5>
+            <input type="file" name="image" id="image" accept="image/*">
             <br>
             <button id="submit" onclick="submitWork()">Submit</button>
         </div>

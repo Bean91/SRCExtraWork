@@ -22,7 +22,7 @@
                         <tr id="optionslist">
                             <td><h4>Teams</h4></td>
                             <td><h4>Type of Work</h4></td>
-                            <td><h4>Week (Default: All Time)</h4></td>
+                            <td><h4>Time Frame</h4></td>
                         </tr>
                         <tr id="optionsrow">
                             <td id="teamlist">
@@ -37,18 +37,38 @@
                             <td id="typelist">
                                 <select name="type" id="type">
                                     <option value="all">All</option>
-                                    <option value="erg">Erg</option>
-                                    <option value="berg">Berg</option>
-                                    <option value="run">Run</option>
-                                    <option value="bike">Bike</option>
-                                    <option value="core">Core</option>
+                                    <option value="Erg">Erg</option>
+                                    <option value="Berg">Berg</option>
+                                    <option value="Run">Run</option>
+                                    <option value="Bike">Bike</option>
+                                    <option value="Core">Core</option>
                                 </select>
                             </td>
-                            <td id="weeklist">
-                                <input type="week" name="week" id="week">
+                            <td>
+                                <select id="timeFilter">
+                                    <option value="all">All Time</option>
+                                    <option value="week">Last 7 Days</option>
+                                    <option value="month">Last 30 Days</option>
+                                </select>
+                            </td>
+                            <td>
+                                <button id="applyFilters" onclick="filter()">Apply</button>
                             </td>
                         </tr>
-                    </table>   
+                    </table>
+                    <div class="leaderboard-container">
+                        <table class="leaderboard-table">
+                          <thead>
+                            <tr>
+                                <td>Name</td>
+                                <td>Team</td>
+                                <td>Total Time</td>
+                            </tr>
+                          </thead>
+                          <tbody id="leaderboardBody">
+                          </tbody>
+                        </table>
+                      </div>
                 </div>
             </center>
         </div>

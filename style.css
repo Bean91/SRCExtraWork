@@ -452,3 +452,52 @@ td {
   padding-right: 10px;
   text-align: center;
 }
+
+/* ========== Leaderboard Styles ========== */
+
+.leaderboard-container {
+  width: 90%;
+  max-width: 1000px;
+  margin: 20px auto 20px; /* Room for navbar */
+  background: #3a3a3a;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  overflow-x: auto;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: azure;
+  font-size: 0.95em;
+}
+
+.leaderboard-table thead {
+  background-color: #255069;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.leaderboard-table tbody tr:nth-child(odd) {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.leaderboard-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  transition: background-color 0.2s ease;
+}
+
+@media (max-width: 600px) {
+  .leaderboard-table th,
+  .leaderboard-table td {
+    padding: 10px;
+    font-size: 0.85em;
+  }
+}

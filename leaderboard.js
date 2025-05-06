@@ -54,8 +54,9 @@ async function loadLeaderboard() {
                 minsHold += workouts[key].mins;
             }
         }
-
-        data.push([minsHold, name, team]);
+        if (minsHold > 0) {
+            data.push([minsHold, name, team]);
+        }
     }
     data.sort((a, b) => b[0] - a[0]);
     const leaderboard = document.getElementById("leaderboardBody");

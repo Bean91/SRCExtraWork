@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch("/navbar.html")
         .then(response => response.text())
         .then(data => {
-            document.body.insertAdjacentHTML("afterbegin", data);
+             document.body.insertAdjacentHTML("afterbegin", data);
             const cookies = document.cookie.split(';');
             for (let i = 0; i < cookies.length; i++) {
                 let cookie = cookies[i].trim();
@@ -26,7 +26,12 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(response => response.text())
         .then(data => {
             document.body.insertAdjacentHTML("beforeend", data);
-        });
+            console.log(getCookie("cookiesAccepted"))
+            if (getCookie("cookiesAccepted") === "true") {
+                document.getElementById("cookie-consent").style.display = "none";
+                console.log("Cookies accepted");
+            }
+        }); 
 });
 
 function attachNavbarEvents() {
@@ -82,8 +87,5 @@ function denyCookies() {
 }
 
 window.onload = function() {
-    if (!getCookie("cookiesAccepted")) {
-        document.getElementById("cookie-consent").style.display = "block";
-    }
-    console.log("ran")
+    
 }

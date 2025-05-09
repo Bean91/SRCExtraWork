@@ -138,4 +138,5 @@ async function filter() {
 window.onload = async function() {
     await welcome();
     await loadLeaderboard();
+    await filter();
 }

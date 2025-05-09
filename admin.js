@@ -43,6 +43,7 @@ async function fetchUsers() {
         }
         li += ` <span onclick="removeData('${doc.id}', 'accounts')">Remove?</span></li>`;
         requestList.innerHTML += li;
+        document.getElementById('searchbox').innerHTML += `<option value="${data.name}">${data.name}</option>`;
     });
 }
 

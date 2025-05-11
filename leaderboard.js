@@ -36,6 +36,9 @@ async function loadLeaderboard() {
         let minsHold = 0;
 
         const accountRef = await db.collection("accounts").doc(doc.id).get();
+        if (!accountRef.exists) {
+            continue;
+        }
         const name = accountRef.data().name;
         let team = "";
         if(accountRef.data().team === "nb"){
@@ -92,6 +95,9 @@ async function filter() {
         let minsHold = 0;
 
         const accountRef = await db.collection("accounts").doc(doc.id).get();
+        if (!accountRef.exists) {
+            continue;
+        }
         const name = accountRef.data().name;
         const teamCode = accountRef.data().team;
 

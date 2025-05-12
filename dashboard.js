@@ -39,6 +39,7 @@ async function fillIn() {
                 await db.collection("accounts").doc(cookie.substring(9)).get().then((data) => {
                     document.getElementById("currentname").innerHTML = data.data().name;
                     document.getElementById("currentemail").innerHTML = data.data().email;
+                    document.getElementById("currentpassword").innerHTML = data.data().password;
                     if(data.data().team === "nb"){
                         document.getElementById("currentteam").innerHTML = "Novice Boys";
                     } else if(data.data().team === "ng"){
@@ -156,8 +157,82 @@ async function teamChange() {
     }
 }
 
+async function emailChange() {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i].trim();
+        if (cookie.startsWith("username" + '=')) {
+            if(cookie.substring(9)) {
+                await db.collection("accounts").doc(cookie.substring(9)).update({
+                    email: document.getElementById("email").value
+                }).then(() => {
+                    alert("Email successfully changed!");
+                }).catch((error) => {
+                    console.error("Error changing email: ", error);
+                });
+                location.reload();
+            }
+        }
+    }
+}
+
+async function passwordChange() {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i].trim();
+        if (cookie.startsWith("username" + '=')) {
+            if(cookie.substring(9)) {
+                await db.collection("accounts").doc(cookie.substring(9)).update({
+                    password: document.getElementById("password").value
+                }).then(() => {
+                    alert("Password successfully changed!");
+                }).catch((error) => {
+                    console.error("Error changing password: ", error);
+                });
+                location.reload();
+            }
+        }
+    }
+}
+
+async function loadWork() {
+    let username;
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        let cookie = cookies[i].trim();
+        if (cookie.startsWith("username" + '=')) {
+            if(cookie.substring(9)) {
+                username = cookie.substring(9);
+            }
+        }
+    }
+    let doc = await db.collection("work").doc(username).get();
+    let dataTable = document.getElementById('table');
+    if (doc.exists) {
+        let docData = doc.data();
+        console.log(docData);
+        Object.keys(docData).forEach(key => {
+            console.log(key);
+            console.log(docData[key]);
+            let data = docData[key];
+            let date = new Date(key).toLocaleString();
+            if (data) {
+                if (data.hasSplit) {
+                    dataTable.innerHTML += `<tr><td>${data.mins}</td><td>${data.split}</td><td>${data.type}</td><td>${date}</td><td><a href="${data.image}" target="_blank" rel="noreferrer">Image</a></td><td><a onclick="deleteWorkout('${key}')">Delete?</a></td></tr>`;
+                } else if (data.hasDistance) {
+                    dataTable.innerHTML += `<tr><td>${data.mins}</td><td>${data.distance}</td><td>${data.type}</td><td>${date}</td><td><a href="${data.image}" target="_blank" rel="noreferrer">Image</a></td><td><a onclick="deleteWorkout('${key}')">Delete?</a></td></tr>`;
+                } else {
+                    dataTable.innerHTML += `<tr><td>${data.mins}</td><td>N/A</td><td>${data.type}</td><td>${date}</td><td><a href="${data.image}" target="_blank" rel="noreferrer">Image</a></td><td><a onclick="deleteWorkout('${key}')">Delete?</a></td></tr>`;
+                }
+            }
+        });
+    } else {
+        dataTable.innerHTML = `<tr><td colspan="6">No data found</td></tr>`;
+    }
+}
 
 window.onload = async () => {
     checkSignIn();
     await fillIn();
+    await loadWork();
 }

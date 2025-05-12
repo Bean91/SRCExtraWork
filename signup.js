@@ -10,23 +10,31 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-function submit() {
+async function submit() {
+    let passed = true;
     if (document.getElementById('password').value !== document.getElementById('confirm_password').value) {
         alert("Passwords do not match");
-        return;
+        passed = false;
     }
     if (document.getElementById('password').value.length < 8) {
         alert("Password must be at least 8 characters long");
-        return;
+        passed = false;
     }
     if (!document.getElementById('password').value.includes('!') && !document.getElementById('password').value.includes('@') && !document.getElementById('password').value.includes('#') && !document.getElementById('password').value.includes('?') && !document.getElementById('password').value.includes('$') && !document.getElementById('password').value.includes('%') && !document.getElementById('password').value.includes('^') && !document.getElementById('password').value.includes('&') && !document.getElementById('password').value.includes('*')) {
         alert("Password must contain at least one special character (!, @, #, ?, $, %, ^, &, *)");
-        return;
+        passed = false;
     }
     if (!document.getElementById('email').value.includes('@')) {
         alert("Please enter a valid email address");
-        return;
+        passed = false;
     }
+    snapshot = await db.collection("accounts").get();
+    snapshot.forEach(doc => {
+        if (doc.id === document.getElementById('username').value) {
+            alert("Username already exists");
+            passed = false;
+        }
+    });
 
     const data = {
         name: document.getElementById('name').value,
@@ -36,8 +44,11 @@ function submit() {
         admin: false,
         mvp: false
     };
-
-    db.collection("accounts").doc(document.getElementById('username').value).set(data)
+    if (!passed) {
+        return;
+    } else if (passed) {
+        db.collection("accounts").doc(document.getElementById('username').value).set(data)
+    }
     
     setTimeout(() => {
         location.reload();

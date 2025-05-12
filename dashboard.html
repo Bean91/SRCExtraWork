@@ -17,6 +17,20 @@
             <h1>Dashboard</h1>
             <h3>Welcome, <span id="user"></span></h3>
             <br>
+            <h4>Update Your Submitted Work:</h4>
+            <table style="width: 100%; text-align: center;">
+                <tbody id="table">
+                    <tr>
+                        <td>Minutes</td>
+                        <td>Split/Distance</td>
+                        <td>Type of Work</td>
+                        <td>Date and Time</td>
+                        <td>Image Link</td>
+                        <td>Delete Workout?</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
             <h4>Update Username (<span id="currentusername"></span>):</h4>
             <input type="text" name="username" id="username" placeholder="Update username" required>
             <br>
@@ -44,6 +58,12 @@
             </select>
             <br>
             <button onclick="teamChange()">Update</button>
+            <br>
+            <br>
+            <h4>Update Password (<span id="currentpassword"></span>):</h4>
+            <input type="text" name="password" id="password" placeholder="Update password" required>
+            <br>
+            <button onclick="passwordChange()">Update</button>
             <br>
             <br>
             <button onclick="signOut()">Sign Out</button>

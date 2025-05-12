@@ -231,6 +231,59 @@ async function loadWork() {
     }
 }
 
+async function deleteWorkout(id) {
+    let userRequested = document.getElementById('searchbox').value;
+    let dataTable = document.getElementById('searchtable');
+    let username;
+    const snapshot = await db.collection("accounts").get()
+    snapshot.forEach(document => {
+        if (document.data().name === userRequested) {
+            username = document.id;
+        }
+    });
+    let doc = await db.collection("work").doc(username).get();
+    let docData = doc.data();
+    deleteImgurImage(docData[id].deletehash);
+    console.log(docData);
+    if (docData.length !== 1) {
+        Object.keys(docData).forEach(key => {
+            console.log(key);
+            console.log(docData[key]);
+            if (key === id) {
+                db.collection("work").doc(username).update({
+                    [key]: firebase.firestore.FieldValue.delete()
+                })
+            }
+        });
+    } else {
+        db.collection("work").doc(userRequested).delete()
+    }
+    setTimeout(() => {
+        location.reload();
+    }, 1000);
+}
+
+function deleteImgurImage(deletehash) {
+    const clientId = '5be34558b5d3a89';
+    const url = `https://api.imgur.com/3/image/${deletehash}`;
+  
+    fetch(url, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Client-ID ${clientId}`,
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        console.log('Image deleted successfully.');
+      } else {
+        console.error('Failed to delete image:', data);
+      }
+    })
+    .catch(error => console.error('Error deleting image:', error));
+  }
+
 window.onload = async () => {
     checkSignIn();
     await fillIn();

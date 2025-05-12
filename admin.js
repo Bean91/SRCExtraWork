@@ -85,25 +85,30 @@ async function searchUsers() {
     }
     let doc = await db.collection("work").doc(username).get();
     let docData = doc.data();
-    console.log(docData);
-    Object.keys(docData).forEach(key => {
-        console.log(key);
-        console.log(docData[key]);
-        let data = docData[key];
-        let date = new Date(key).toLocaleString();
-        if (data) {
-            if (data.hasSplit) {
-                dataTable.innerHTML += `<tr><td>${data.mins}</td><td>${data.split}</td><td>${data.type}</td><td>${date}</td><td><a href="${data.image}" target="_blank" rel="noreferrer">Image</a></td><td><a onclick="deleteWorkout('${key}')">Delete?</a></td></tr>`;
-            } else if (data.hasDistance) {
-                dataTable.innerHTML += `<tr><td>${data.mins}</td><td>${data.distance}</td><td>${data.type}</td><td>${date}</td><td><a href="${data.image}" target="_blank" rel="noreferrer">Image</a></td><td><a onclick="deleteWorkout('${key}')">Delete?</a></td></tr>`;
+    if (doc.exists) {
+        dataTable.innerHTML = "<tr><td>Minutes</td> <td>Split/Distance</td><td>Type of Work</td><td>Date and Time</td><td>Image Link</td><td>Delete Workout?</td></tr>";
+        console.log(docData);
+        Object.keys(docData).forEach(key => {
+            console.log(key);
+            console.log(docData[key]);
+            let data = docData[key];
+            let date = new Date(key).toLocaleString();
+            if (data) {
+                if (data.hasSplit) {
+                    dataTable.innerHTML += `<tr><td>${data.mins}</td><td>${data.split}</td><td>${data.type}</td><td>${date}</td><td><a href="${data.image}" target="_blank" rel="noreferrer">Image</a></td><td><a onclick="deleteWorkout('${key}')">Delete?</a></td></tr>`;
+                } else if (data.hasDistance) {
+                    dataTable.innerHTML += `<tr><td>${data.mins}</td><td>${data.distance}</td><td>${data.type}</td><td>${date}</td><td><a href="${data.image}" target="_blank" rel="noreferrer">Image</a></td><td><a onclick="deleteWorkout('${key}')">Delete?</a></td></tr>`;
+                } else {
+                    dataTable.innerHTML += `<tr><td>${data.mins}</td><td>N/A</td><td>${data.type}</td><td>${date}</td><td><a href="${data.image}" target="_blank" rel="noreferrer">Image</a></td><td><a onclick="deleteWorkout('${key}')">Delete?</a></td></tr>`;
+                }
             } else {
-                dataTable.innerHTML += `<tr><td>${data.mins}</td><td>N/A</td><td>${data.type}</td><td>${date}</td><td><a href="${data.image}" target="_blank" rel="noreferrer">Image</a></td><td><a onclick="deleteWorkout('${key}')">Delete?</a></td></tr>`;
+                alert("User has no extra work");
+                return;
             }
-        } else {
-            alert("User has no extra work");
-            return;
-        }
-    });
+        });
+    } else {
+        dataTable.innerHTML = `<tr><td colspan="5">No extra work found for this user</td></tr>`;
+    }
     document.getElementById('searchresults').style.display = "block";
 }
 

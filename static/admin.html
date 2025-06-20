@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title id="title">SRC Extra Work | Admin</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="/static/logo.png">
+        <link rel="stylesheet" href="/static/style.css">
+        <script src="/static/navbar.js"></script>
+        <script src="/static/admin.js"></script>
+    </head>
+    <body>
+        <div id="top" class="mainbody">
+            <h1>Coaches and Coxswains</h1>
+            <p>Welcome to the coaches and coxswains page. Here you can manage the website.</p>
+            <br>
+            <div style="text-align: left;">
+                <div id="data">
+                    <h3>Manage and Search Submitted Workouts:</h3>
+                    <select name="searchbox" id="searchbox"></select>
+                    <button id="searchbtn" onclick="loadWork()">Search</button>
+                    <br>
+                    <div id="searchresults" style="display: none;">
+                        <h4>Search Results:</h4>
+                        <table id="extraworklist">
+                            <thead id="extraworkhead">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Minutes</th>
+                                    <th>Split/Distance</th>
+                                    <th>Image</th>
+                                    <th>Delete?</th>
+                                </tr>
+                            </thead>
+                            <tbody id="extraworkbody">
+                                <!-- Extra work entries will be dynamically inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <br>
+                <div id="users">
+                    <h3>Manage Users:</h3>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

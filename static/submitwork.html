@@ -4,24 +4,23 @@
         <title id="title">SRC Extra Work | Submit Work</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/x-icon" href="/logo.png">
-        <link rel="stylesheet" href="/style.css">
-        <script src="/navbar.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore-compat.js"></script>
-        <script src="/submitwork.js"></script>
+        <link rel="icon" type="image/x-icon" href="/static/logo.png">
+        <link rel="stylesheet" href="/static/style.css">
+        <script src="/static/navbar.js"></script>
+        <script src="/static/submitwork.js"></script>
     </head>
     <body>
         <div class="mainbody" id="top">
             <h1>Extra Work Submittions</h1>
             <p>Submit all your extra work here.</p>
             <br>
-            <select name="type" id="type" onchange="change()">
+            <select name="type" id="type">
                 <option value="Erg">Erg</option>
                 <option value="Berg">Berg</option>
                 <option value="Run">Run</option>
                 <option value="Bike">Bike</option>
                 <option value="Core">Core</option>
+                <option value="Lift">Lift</option>
             </select>
             <br>
             <h5>Date:</h5>
@@ -30,21 +29,14 @@
             <h5>Number of Minutes:</h5>
             <input type="text" id="mins" placeholder="Number of minutes">
             <br>
-            <div id="splits" style="display: inline-block;">
-                <h5>Split:</h5>
-                <input type="text" id="split" placeholder="e.g. 54.2">
-                <br>
-            </div>
-            <div id="distan" style="display: none;">
-                <h5>Distance:</h5>
-                <input type="text" id="dista" placeholder="Enter the distance">
-                <br>
-            </div>
+            <h5>Split/Distance (For Core and Lift put 0):</h5>
+            <input type="text" id="split_distance" placeholder="Enter the split/distance">
+            <br>
             <br>
             <h5>Photo of Workout Data:</h5>
             <input type="file" name="image" id="image" accept="image/*">
             <br>
-            <button id="submit" onclick="submitWork()">Submit</button>
+            <button onclick="submit()">Submit</button>
         </div>
     </body>
 </html>

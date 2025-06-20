@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title id="title">SRC Extra Work | Sign Up</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="/static/logo.png">
+        <link rel="stylesheet" href="/static/style.css">
+        <script src="/static/navbar.js"></script>
+        <script src="/static/sign.js"></script>
+    </head>
+    <body>
+        <div class="mainbody" id="top">
+            <h2>Sign Up</h2>
+            <br>
+            <form action="/signup" method="post">
+                <h5>Email:</h5>
+                <input type="email" name="email" required id="email" placeholder="Enter your email">
+                <br>
+                <h5>Username:</h5>
+                <input type="text" name="username" required id="username" placeholder="Enter your username">
+                <br>
+                <h5>Password:</h5>
+                <input type="password" name="password" required id="password" placeholder="Enter your password">
+                <br>
+                <h5>Confirm Password:</h5>
+                <input type="password" name="confirm_password" required id="confirm_password" placeholder="Confirm your password">
+                <br>
+                <h5>First Name:</h5>
+                <input type="text" name="first_name" placeholder="First Name" required/>
+                <br>
+                <h5>Last Name:</h5>
+                <input type="text" name="last_name" placeholder="Last Name" required/>
+                <br>
+                <h5>Team:</h5>
+                <select name="team" id="team" required>
+                    <option value="nb">Novice Boys</option>
+                    <option value="vb">Varsity Boys</option>
+                    <option value="ng">Novice Girls</option>
+                    <option value="vg">Varsity Girls</option>
+                </select>
+                <br>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </body>
+</html>

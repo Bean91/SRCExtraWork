@@ -1,36 +1,36 @@
 // Load navbar.html into each page
 document.addEventListener("DOMContentLoaded", () => {
-    fetch("/navbar.html")
+    fetch("/static/navbar.html")
         .then(response => response.text())
         .then(data => {
             let dash = false;
             let submit = false;
             let signin = true;
             let admin = false;
-             document.body.insertAdjacentHTML("afterbegin", data);
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                let cookie = cookies[i].trim();
-                if (cookie.startsWith("username" + '=')) {
-                    if(cookie.substring(9)) {
-                        document.getElementById('signin').style.display = "none";
-                        document.getElementById('dashboard').style.display = "inline-block";
-                        document.getElementById('submitwork').style.display = "inline-block";
-                        let dash = true;
-                        let submit = true;
-                        let signin = false;
-                    }
-                }
-                if (cookie.startsWith("admin" + '=')) {
-                    if(cookie.substring(6) === "true") {
-                        document.getElementById('admin').style.display = "inline-block";
-                        let admin = true;
-                    }
-                }
+            document.body.insertAdjacentHTML("afterbegin", data);
+            if (getCookie("session_token")) {
+                dash = true;
+                submit = true;
+                signin = false;
             }
-            attachNavbarEvents(dash, submit, signin, admin); // Reattach event listeners after inserting the HTML
+            fetch("/isAdmin", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ session_token: getCookie("session_token") })
+            }).then(response => response.json())
+            .then(data => {
+                if (data.is_admin) {
+                    admin = true;
+                }
+                console.log(dash, submit, signin, admin);
+                attachNavbarEvents(dash, submit, signin, admin)
+            }).catch(error => {
+                console.error("Error checking admin status:", error);
+            });
         });
-    fetch("/cookie.html")
+    fetch("/static/cookie.html")
         .then(response => response.text())
         .then(data => {
             document.body.insertAdjacentHTML("beforeend", data);
@@ -46,49 +46,37 @@ function attachNavbarEvents(dash, submit, signin, admin) {
     const menuIcon = document.querySelector('.menuIcon');
     const nav = document.querySelector('.overlay-menu');
 
+    if(dash){
+        document.getElementById('dashboard').style.display = "inline-block";
+    } else {
+        document.getElementById('dashboard').style.display = "none";
+    }
+    if(submit){
+        document.getElementById('submitwork').style.display = "inline-block";
+    } else {
+        document.getElementById('submitwork').style.display = "none";
+    }
+    if(signin){
+        document.getElementById('signin').style.display = "inline-block";
+    } else {
+        document.getElementById('signin').style.display = "none";
+    }
+    if(admin){
+        document.getElementById('admin').style.display = "inline-block";
+    } else {
+        document.getElementById('admin').style.display = "none";
+    }
     menuIcon.addEventListener('click', () => {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            let cookie = cookies[i].trim();
-            if (cookie.startsWith("username" + '=')) {
-                if(cookie.substring(9)) {
-                    document.getElementById('signin').style.display = "none";
-                    document.getElementById('dashboard').style.display = "inline-block";
-                    document.getElementById('submitwork').style.display = "inline-block";
-                }
-            }
-            if (cookie.startsWith("admin" + '=')) {
-                if(cookie.substring(6) === "true") {
-                    document.getElementById('admin').style.display = "inline-block";
-                }
-            }
-        }
+        
         if (nav.style.transform !== 'translateX(0%)') {
             nav.style.transform = 'translateX(0%)';
             nav.style.transition = 'transform 0.2s ease-out';
         }
     });
 
-    // Toggle Menu Icon
     const toggleIcon = document.querySelector('.menuIcon');
 
     toggleIcon.addEventListener('click', () => {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            let cookie = cookies[i].trim();
-            if (cookie.startsWith("username" + '=')) {
-                if(cookie.substring(9)) {
-                    dash = true;
-                    submit = true;
-                    signin = false;
-                }
-            }
-            if (cookie.startsWith("admin" + '=')) {
-                if(cookie.substring(6) === "true") {
-                    admin = true;
-                }
-            }
-        }
         if (toggleIcon.className !== 'menuIcon toggle') {
             toggleIcon.className += ' toggle';
         } else {

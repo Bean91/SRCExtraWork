@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title id="title">SRC Extra Work | Dashboard</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="/static/logo.png">
+        <link rel="stylesheet" href="/static/style.css">
+        <script src="/static/navbar.js"></script>
+        <script src="/static/dashboard.js"></script>
+    </head>
+    <body>
+        <div class="mainbody" id="top">
+            <h1>Dashboard</h1>
+            <h3>Welcome, <span id="user"></span></h3>
+            <br>
+            <div id="extrawork">
+                <h2>Extra Work</h2>
+                <br>
+                <center>
+                    <table id="extraworklist">
+                        <thead id="extraworkhead">
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Minutes</th>
+                                <th>Split/Distance</th>
+                                <th>Image</th>
+                                <th>Delete?</th>
+                            </tr>
+                        </thead>
+                        <tbody id="extraworkbody">
+                            <!-- Extra work entries will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                    <br>
+                </center>
+            </div>
+            <h4>Update Username (<span id="currentusername"></span>):</h4>
+            <form action="/updateusername" method="post">
+                <input type="text" name="username" id="username" placeholder="Update username" required>
+                <br>
+                <button type="submit">Update</button>
+            </form>
+            <br>
+            <br>
+            <h4>Update First Name (<span id="currentfirstname"></span>):</h4>
+            <form action="/updatefirstname" method="post">
+                <input type="text" name="firstname" id="firstname" placeholder="Update first name" required>
+                <br>
+                <button type="submit">Update</button>
+            </form>
+            <br>
+            <br>
+            <h4>Update Last Name (<span id="currentlastname"></span>):</h4>
+            <form action="/updatelastname" method="post">
+                <input type="text" name="lastname" id="lastname" placeholder="Update last name" required>
+                <br>
+                <button type="submit">Update</button>
+            </form>
+            <br>
+            <br>
+            <h4>Update Email (<span id="currentemail"></span>):</h4>
+            <form action="/updateemail" method="post">
+                <input type="text" name="email" id="email" placeholder="Update email" required>
+                <br>
+                <button type="submit">Update</button>
+            </form>
+            <br>
+            <br>
+            <h4>Update Team (<span id="currentteam"></span>):</h4>
+            <form action="/updateteam" method="post">
+                <select name="team" id="team">
+                    <option value="nb">Novice Boys</option>
+                    <option value="vb">Varsity Boys</option>
+                    <option value="ng">Novice Girls</option>
+                    <option value="vg">Varsity Girls</option>
+                </select>
+                <br>
+                <button type="submit">Update</button>
+            </form>
+            <br>
+            <br>
+            <h4>Update Password:</h4>
+            <form action="/updatepassword" method="post">
+                <input type="password" name="current_password" id="current_password" placeholder="Current password" required>
+                <br>
+                <input type="text" name="password" id="password" placeholder="Update password" required>
+                <br>
+                <input type="text" name="confirm_password" id="confirm_password" placeholder="Confirm password" required>
+                <br>
+                <button type="submit">Update</button>
+            </form>
+            <br>
+            <br>
+            <button onclick="signOut()">Sign Out</button>
+            <br>
+            <br>
+            <button onclick="deleteAccount()" style="background-color: red;">Delete Account</button>
+        </div>
+    </body>
+</html>

@@ -1,4 +1,4 @@
-import os, bcrypt, secrets, dbservice as db
+import bcrypt, secrets, dbservice as db
 from fastapi import FastAPI, Form, Response, Cookie, Query
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware

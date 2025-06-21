@@ -219,7 +219,7 @@ def create_work_table():
     cursor.close()
     conn.close()
 
-def remove_work(work_id, username):
+def remove_work(work_id):
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(

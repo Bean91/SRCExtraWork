@@ -74,7 +74,7 @@ function fetchUsers() {
             }
             li += ` <span onclick="removeUser(${data[5]})">Remove?</span></li>`;
             requestList.innerHTML += li;
-            document.getElementById('searchbox').innerHTML += `<option value="${data[1]} ${data[2]}">${data[1]} ${data[2]}</option>`;
+            document.getElementById('searchbox').innerHTML += `<option value="${data[5]}">${data[1]} ${data[2]}</option>`;
         });
     });
     

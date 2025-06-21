@@ -269,3 +269,15 @@ def get_all_users():
     cursor.close()
     conn.close()
     return result if result else []
+
+def name_to_username(first_name, last_name):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT username FROM users WHERE first_name = %s AND last_name = %s;",
+        (first_name, last_name)
+    )
+    result = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return result if result else []

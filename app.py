@@ -172,5 +172,23 @@ def get_username(session_token: str = Cookie(default=None)):
 
 @app.post("/user_work")
 def user_work(username: str = Query()):
+    print(username)
     work_items = db.load_work(username)
+    print(work_items)
     return {"success": True, "work": work_items}
+
+@app.post("/name_to_username")
+def name_to_username(first_name: str = Query(...), last_name: str = Query(...)):
+    username = db.name_to_username(first_name, last_name)
+    if username:
+        return {"success": True, "username": username}
+    return {"success": False, "error": "Username not found."}
+
+@app.post("/fetch_work")
+def fetch_work(session_token: str = Cookie(default=None)):
+    username = db.get_session_user(session_token)
+    if not username:
+        return {"success": False, "error": "Username not found."}
+    work = db.load_work(username)
+    print(work)
+    return {"success": True, "work": work}

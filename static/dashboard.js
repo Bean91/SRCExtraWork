@@ -62,8 +62,7 @@ function deleteImgurImage(deletehash) {
 
 
 function loadWork() {
-    let username = document.getElementById("searchbox").value;
-    fetch('/fetch_work?'+username, {
+    fetch('/fetch_work', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -80,7 +79,7 @@ function loadWork() {
                 const workItem = document.createElement("tr");
                 workItem.className = "work-item";
                 let date = new Date(work[2]);
-                date.toLocaleDateString();
+                date.toString();
                 workItem.innerHTML = `
                     <td>${date}</td>
                     <td>${work[0]}</td>
@@ -147,7 +146,16 @@ window.onload = function() {
             document.getElementById("currentfirstname").innerText = data.user_info[2];
             document.getElementById("currentlastname").innerText = data.user_info[3];
             document.getElementById("currentusername").innerText = data.user_info[0];
-            document.getElementById("currentteam").innerText = data.user_info[4];
+            teamCode = data.user_info[4]
+            if (teamCode === "nb") {
+                document.getElementById("currentteam").innerText = "Novice Boys";
+            } else if (teamCode === "ng") {
+                document.getElementById("currentteam").innerText = "Novice Girls";
+            } else if (teamCode === "vb") {
+                document.getElementById("currentteam").innerText = "Varsity Boys";
+            } else if (teamCode === "vg") {
+                document.getElementById("currentteam").innerText = "Varsity Girls";
+            }
         } else {
             alert("Error fetching user info: " + data.error);
         }

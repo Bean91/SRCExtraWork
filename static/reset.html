@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title id="title">SRC Extra Work | Reset Password</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="/static/logo.png">
+        <link rel="stylesheet" href="/static/style.css">
+        <script src="/static/navbar.js"></script>
+        <script src="/static/sign.js"></script>
+        <script src="/static/reset.js"></script>
+    </head>
+    <body>
+        <div class="mainbody" id="top">
+            <h2>Reset Password</h2>
+            <br>
+            <form action="/reset_pw" method="post">
+                <h5>Email Address:</h5>
+                <input type="email" name="email" required id="email" placeholder="Enter your email">
+                <button type="submit">Send Link</button>
+            </form>
+        </div>
+    </body>
+</html>

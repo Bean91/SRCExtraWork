@@ -82,12 +82,12 @@
             <br>
             <br>
             <h4>Update Password:</h4>
-            <form action="/updatepassword" method="post">
+            <form action="/updatepassword?reset=false" method="post">
                 <input type="password" name="current_password" id="current_password" placeholder="Current password" required>
                 <br>
-                <input type="text" name="password" id="password" placeholder="Update password" required>
+                <input type="password" name="password" id="password" placeholder="Update password" required>
                 <br>
-                <input type="text" name="confirm_password" id="confirm_password" placeholder="Confirm password" required>
+                <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm password" required>
                 <br>
                 <button type="submit">Update</button>
             </form>

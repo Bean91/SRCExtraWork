@@ -4,6 +4,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, RedirectResponse
 from dotenv import load_dotenv
+from email_service import send_reset_email
 
 load_dotenv()
 
@@ -192,3 +193,29 @@ def fetch_work(session_token: str = Cookie(default=None)):
     work = db.load_work(username)
     print(work)
     return {"success": True, "work": work}
+
+@app.post("/reset_pw")
+async def reset_pw(email: str = Form(...)):
+    username = db.email_to_username(email)
+    name = db.get_user_name(username)[0] + " " + db.get_user_name(username)[1]
+    if username:
+        session_token = secrets.token_urlsafe(32)
+        db.store_session(session_token, username)
+        reset_link = "https://srcextrawork.duckdns.org/static/resetpw.html?session_token="+session_token
+        await send_reset_email(email, name, reset_link)
+    return RedirectResponse(url="/", status_code=303)
+
+@app.post("/updatepassword")
+def update_password(current_password: str = Form(...), password: str = Form(...), confirm_password: str = Form(...), session_token: str = Cookie(default=None), reset: bool = Query(...)):
+    if not session_token and not reset:
+        return {"error": "No session token provided. Please log in."}
+    username = db.get_session_user(session_token)
+    if not username and not reset:
+        return {"error": "Invalid session token."}
+    if bcrypt.checkpw(current_password.encode('utf-8'), db.get_user_password(username).encode('utf-8')) or reset:
+        if password != confirm_password:
+            return {"error": "New passwords do not match."}
+        hashed = hash_password(password)
+        db.update_user_password(username, hashed)
+        return RedirectResponse(url="/static/dashboard.html", status_code=303)
+    return {"error": "Current password is incorrect."}

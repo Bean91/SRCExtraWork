@@ -31,6 +31,18 @@ def create_user_table():
     cursor.close()
     conn.close()
 
+def email_to_username(email):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT username FROM users WHERE email = %s;",
+        (email,)
+    )
+    result = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return result[0] if result else None
+
 def get_user_password(username):
     conn = get_db_connection()
     cursor = conn.cursor()
